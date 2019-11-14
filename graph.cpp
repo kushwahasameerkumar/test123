@@ -192,3 +192,54 @@ int main() {
 }
 
 ----------------------------------------------------------------------------------------------------
+
+
+#include <bits/stdc++.h>
+using namespace std;
+
+class Graph{
+    int V;
+    list<int> *adj;
+    
+    public:
+        Graph(int v){
+            this->V = v;
+            adj = new list<int>[V];
+        }
+        void addEdge(int u, int v){
+            adj[u].push_back(v);
+        }
+        void DFS(int s);
+        void DFS_Visit(int s, bool visited[]);
+};
+void Graph::DFS(int s){
+    bool *visited = new bool[V];
+    for(int i=0; i<V; ++i){
+        visited[i] = false;
+    }
+    DFS_Visit(s, visited);
+    
+}
+void Graph::DFS_Visit(int s, bool visited[]){
+    visited[s] = true;
+    cout<<s<<" ";
+    list<int>::iterator it;
+    for(it=adj[s].begin(); it!=adj[s].end(); ++it){
+        if(!visited[*it]){
+            DFS_Visit(*it, visited);
+        }
+    }
+}
+
+int main() {
+    Graph g(4); 
+    g.addEdge(0, 1); 
+    g.addEdge(0, 2); 
+    g.addEdge(1, 2); 
+    g.addEdge(2, 0); 
+    g.addEdge(2, 3); 
+    g.addEdge(3, 3); 
+    g.DFS(2);
+    return 0;
+}
+
